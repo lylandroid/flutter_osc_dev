@@ -14,26 +14,29 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  final tabTextStyleNormal = new TextStyle(color: const Color(0xff969696));
-  final tabTextStyleSelected = new TextStyle(color: const Color(0xff63ca6c));
-
   int _tabSelectIndex = 0;
+  final tabTextStyleNormal = new TextStyle(color: const Color(0xff969696));
+
+  final tabTextStyleSelected = new TextStyle(color: const Color(0xff63ca6c));
   var _tabTexts = ['资讯', '动弹', '发现', '我的'];
   var _tabImages;
-
-  var _tabPages = new IndexedStack(
-    children: <Widget>[
-      new NewsListPage(),
-      new TweetsListPage(),
-      new DiscoveryPage(),
-      new MyInfoPage()
-    ],
-// ignore: implicit_this_reference_in_initializer
-    index: _tabSelectIndex,
-  );
+  var _tabPages;
 
   Image getTabImage(path) {
     return Image.asset(path, width: 20.0, height: 20.0);
+  }
+
+  void initTabPages(){
+    _tabPages = new IndexedStack(
+      children: <Widget>[
+        new NewsListPage(),
+        new TweetsListPage(),
+        new DiscoveryPage(),
+        new MyInfoPage()
+      ],
+// ignore: implicit_this_reference_in_initializer
+      index: _tabSelectIndex,
+    );
   }
 
   void initTabImages() {
@@ -60,7 +63,9 @@ class MyAppState extends State<MyApp> {
   }
 
   Image getTabIcon(int curIndex) {
-    return curIndex == _tabSelectIndex ? _tabImages[curIndex][1] : _tabImages[curIndex][0];
+    return curIndex == _tabSelectIndex
+        ? _tabImages[curIndex][1]
+        : _tabImages[curIndex][0];
   }
 
   Text getTabText(int curIndex) {
@@ -73,6 +78,7 @@ class MyAppState extends State<MyApp> {
   @override
   void initState() {
     initTabImages();
+    initTabPages();
     super.initState();
   }
 
