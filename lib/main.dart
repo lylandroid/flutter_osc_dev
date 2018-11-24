@@ -5,6 +5,7 @@ import 'pages/home/NewsListPage.dart';
 import 'pages/home/TweetsListPage.dart';
 import 'pages/home/DiscoveryPage.dart';
 import 'pages/home/MyInfoPage.dart';
+import 'pages/LeftDrawerPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,22 +22,29 @@ class MyAppState extends State<MyApp> {
   var _tabTexts = ['资讯', '动弹', '发现', '我的'];
   var _tabImages;
   var _tabPages;
+  var leftDrawerPage = new LeftDrawerPage();
 
   Image getTabImage(path) {
     return Image.asset(path, width: 20.0, height: 20.0);
   }
 
-  void initTabPages(){
-    _tabPages = new IndexedStack(
-      children: <Widget>[
-        new NewsListPage(),
-        new TweetsListPage(),
-        new DiscoveryPage(),
-        new MyInfoPage()
-      ],
-// ignore: implicit_this_reference_in_initializer
-      index: _tabSelectIndex,
-    );
+  void initTabPages() {
+    _tabPages = [
+      new NewsListPage(),
+      new TweetsListPage(),
+      new DiscoveryPage(),
+      new MyInfoPage()
+    ];
+//    _tabPages = new IndexedStack(
+//      children: <Widget>[
+//        new NewsListPage(),
+//        new TweetsListPage(),
+//        new DiscoveryPage(),
+//        new MyInfoPage()
+//      ],
+//// ignore: implicit_this_reference_in_initializer
+//      index: _tabSelectIndex,
+//    );
   }
 
   void initTabImages() {
@@ -95,7 +103,7 @@ class MyAppState extends State<MyApp> {
               style: TextStyle(color: Colors.white)),
           iconTheme: new IconThemeData(color: Colors.white),
         ),
-        body: _tabPages,
+        body: _tabPages[_tabSelectIndex],
         bottomNavigationBar: new CupertinoTabBar(
           items: [
             new BottomNavigationBarItem(
@@ -114,6 +122,7 @@ class MyAppState extends State<MyApp> {
             });
           },
         ),
+        drawer: leftDrawerPage,
       ),
     );
   }
