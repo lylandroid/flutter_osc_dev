@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_osc_dev/base/ResponseBean.dart';
+
+import 'package:flutter_osc_dev/utils/HttpUtils.dart';
+import 'package:flutter_osc_dev/listener/ResponseCallback.dart';
+import 'package:flutter_osc_dev/bean/NewsListBean.dart';
+import 'package:flutter_osc_dev/api/Api.dart';
 
 class NewsListPage extends StatefulWidget {
 //  var newsListPageState = new NewsListPageState();
@@ -20,9 +26,19 @@ class NewsListPageState extends State<NewsListPage> {
   @override
   void initState() {
     print("NewsListPageState initState");
-    for (int i = 0; i < 10; i++) {
-      _listData.add("item " + (i + 1).toString());
-    }
+//    for (int i = 0; i < 10; i++) {
+//      _listData.add("item " + (i + 1).toString());
+//    }
+    String url = Api.NEWS_LIST;
+    Map<String, String> pramsMap = {};
+    pramsMap["pageIndex"] = "1";
+    pramsMap["pageSize"] = "10";
+    HttpUtils.getInstance().get(url, pramsMap,new NewsListBean()
+        ,(statusCode, isSuccess, errMsg,  IBean iBean ){
+          NewsListBean beanImp = iBean;
+//            print("NewsListBean: ${beanImp.msg}");
+
+    });
   }
 
   @override
